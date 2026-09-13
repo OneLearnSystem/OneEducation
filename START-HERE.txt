@@ -1,0 +1,39 @@
+ONEEDUCATION — SCHOOL CONFIGURATION REVAMP
+
+1. Back up your OneLearn platform Supabase project.
+2. Run ONEEDUCATION-REVAMP-UPGRADE.sql in that SAME platform project (nndjwqjyfgozltdoujiu). Run the original OneLearn platform installer first if this is a brand-new deployment. Do not run this in the old single-school Westview database.
+3. Replace the OneEducation website files with this release. Keep your existing config.js if you have customised app URLs. The supplied config contains your new platform project URL and publishable key. Upload HTML, CSS, JS, MJS, JSON and SVG files only. Do not upload SQL or guides to public GitHub.
+4. Open OneEducation, hard-refresh and sign in. Select School management at the top, or open manage.html?school=YOUR-SCHOOL-ADDRESS.
+
+AUTOMATION
+New schools start without sample rooms, houses, students or classes. Existing records are preserved. Mass imports, default class/tutor/house allocation, bulk class creation and timetable generation are off by default. A school leader enables the tools they want in School policies. Adding one student always works without automatic grouping. Imports preview before saving and may allocate existing classes, existing tutors, both, or neither. No import creates a timetable. Use the new School management import area rather than the older shared setup intake form.
+
+HOUSES / POINTS
+Create and rename houses. Renaming updates assigned pupils. Reassign pupils before deleting their current house. Configure behaviour and house point reasons with values from 1–50. Existing point records remain unchanged. The normal MIS behaviour/reward form reads these school policies.
+
+STAFF / ROLES
+Enter real staff profile names and emails; profiles do not grant login access. System administrators issue invitations with a role. The recipient redeems the invitation through OneLearn. A changed role takes effect on redemption. Existing admin and teacher accounts remain valid.
+System administrator: all management and account invitations.
+Headteacher, deputy head, assistant head: school policies, students, staff profiles, classes, timetables, teaching and emergency resolution; no system account administration.
+Timetable manager: classes, staff profiles, rooms and timetables; cannot edit pupils, points, policies or accounts.
+Teacher: attendance, behaviour/rewards, teaching activity, raise/acknowledge alerts.
+Cover teacher: attendance and raise/acknowledge alerts.
+School office: pupil imports/allocation, attendance, raise/acknowledge alerts.
+Permissions are enforced in the database. Some older MIS screens remain visible for viewing; unauthorised saves are rejected.
+
+WEEK A / B
+Set a reference Monday for Week A. Weeks alternate by calendar week, including holidays. Schedule lessons manually, or explicitly enable generation, generate a draft, review it and save. Both weeks are saved in the actual class records. Teachers can view/filter by teacher, pupil and room and print/save the grid as PDF. Student timetable pages, registers and cover lookup use the corresponding week. Existing unlabelled weekly meetings apply to both weeks until edited.
+Every saved structural timetable change checks rooms, named staff, enrolled pupils and capacity. A room, staff member or pupil cannot be booked in two classes in the same week/day/lesson. The generator has a bounded search and may fail even when a manually constructed solution could exist; failure does not change saved schedules. It uses the existing five-period school day. Exam scheduling is a separate existing workflow and is not an integrated exam/lesson optimisation system. Tutor-base allocations are separate from lesson scheduling.
+For existing schools, add staff emails before changing old timetables. Previously generated placeholder staff have no genuine email. Existing invalid timetables are shown by Check clashes; they are not silently deleted by the upgrade.
+
+SATs
+CSV columns: Student ID (preferred), First name, Last name, Reading, Maths, GPS. Reading/Maths are required columns; GPS is optional. Scaled scores are whole numbers 80–120 or blank. Unknown/ambiguous names and duplicate rows are rejected. Export a template from current pupils. No results create new pupils.
+Default: save scores only, then use individual allocation. Optional automatic proposals rank pupils by the selected score and distribute them evenly among ascending set numbers, within capacity. Choose the reading-linked and maths-linked subjects yourself. Missing scores require manual allocation. Preview the proposed class names before confirming. Any clash with current schedules blocks the change.
+
+BUILDINGS
+Add/edit classrooms, building, floor, room type and capacity. Choose a grid, corridor, courtyard or uploaded-image campus view. Images must be PNG/JPG/WebP, up to 2 MB. The image is a visual reference, not automatic room detection or an evacuation plan. Room capacity and availability come from the room records.
+
+EMERGENCY CENTRE
+Raise priority alerts with a location and optional pupil/tutor context. Staff can acknowledge; school leadership resolves with an outcome. Active staff browsers poll every 15 seconds when visible. An in-app banner links to the centre. The centre is not an emergency-services contact system and does not send email, SMS or push notifications when browsers are closed. Use the school's established emergency procedures alongside it.
+
+This is a locally tested pilot upgrade. No live school data or deployed site has been changed by building the ZIP. Each ZIP entry is a file at the root; there are no folders.
