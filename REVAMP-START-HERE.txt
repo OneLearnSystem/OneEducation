@@ -1,0 +1,157 @@
+ONEEDUCATION — SCHOOL MIS FEATURE UPGRADE
+Release: 15 September 2026
+
+IMPORTANT INTERPRETATION — “iGradePlus”
+The attached project already contains the OneEducation “Your school. Your way.” management interface (manage.html). This release integrates THAT existing OneEducation management page into the main MIS navigation. It does NOT connect to, embed, scrape or otherwise integrate any third-party iGradePlus service. If “iGradePlus” was intended to mean a real third-party product rather than your existing OneEducation management interface, confirm that separately before any such integration is attempted.
+
+WHAT THIS RELEASE PRESERVES
+- Existing OneEducation branding, typography and overall UI styling.
+- Existing Supabase project URL and publishable key in config.js.
+- Existing school JSON records, configurable houses, SATs imports, campus layouts, Week A/B, emergency centre, points, pupil records, classes, rooms, staff profiles and other existing MIS features.
+- Existing automation choices. Mass import, automatic class/tutor/house allocation, bulk class creation and automatic timetable generation remain OFF by default unless already enabled by a school.
+- Existing demo-state.json is unchanged.
+
+FILES YOU SHOULD HAVE
+1. OneEducation-School-Revamp-2026-09-15.zip
+   Website/app files only. Every entry is at the ZIP root. There are no folders.
+2. OneEducation-Upgrade-2026-09-15.sql
+   Database upgrade, supplied separately. Do NOT publish this SQL file on the public website.
+
+SAFE INSTALLATION ORDER
+1. Back up the Supabase database before changing anything. For a live school, test on a staging copy first.
+2. Confirm the site is using the same OneLearn / OneEducation Supabase project as config.js. This release preserves the current supplied configuration; do not run the migration against an unrelated or older Westview-only project.
+3. Open the Supabase SQL Editor for that project and run OneEducation-Upgrade-2026-09-15.sql once. The script uses a transaction and ends with COMMIT. If it errors, do not keep retrying blindly: copy the complete SQL error and inspect the current schema/function version first.
+4. Upload the files from the ZIP to the SAME web root as the current OneEducation deployment, replacing matching website files. There are no subfolders to create.
+5. Keep config.js unchanged unless you intentionally need to point the website at another Supabase project. Never put a Supabase service-role secret in config.js; only the publishable/anon-style browser key belongs there.
+6. Hard-refresh the browser (Ctrl+F5 / Cmd+Shift+R) after deployment so older JS modules are not cached.
+7. Sign in as a system administrator and use “School management” in the main MIS navigation. The management page remains available directly as manage.html?school=YOUR-SCHOOL-SLUG.
+8. Run the acceptance checks near the end of this document before allowing general use.
+
+NO EXTRA BACKEND SERVER IS REQUIRED FOR THIS BUILD
+The existing static host (for example GitHub Pages) continues to serve the HTML/CSS/JS/MJS/JSON/SVG files. Supabase remains the database/authentication backend. New LockDown, safeguarding and Funding access rules are implemented as database functions/tables so restricted data is not protected by UI hiding alone.
+
+NEW / COMPLETED AREAS
+
+SCHOOL MANAGEMENT NAVIGATION
+“School management” now appears in the main OneEducation navigation and opens the existing “Your school. Your way.” management interface. No third-party iGradePlus integration is included.
+
+TIMETABLES
+- Existing manual class timetable editing is retained.
+- Teacher filtering and Week A/B are retained.
+- Automatic generation remains explicitly opt-in through School policies.
+- Both browser-side checks and the database timetable validator reject room, teacher and overlapping-pupil clashes in the same Week A/B day/lesson slot.
+- Capacity and teaching-room checks are retained.
+- The generator is bounded. A failed generation attempt does not overwrite the saved timetable and does not prove that no manual solution exists.
+
+DETENTIONS
+- New/edit detention records with pupil, reason, date, location, attendance status and notes.
+- Detention reasons are an editable school dropdown.
+- Authorised detention roles can download the selected day’s detention board as CSV.
+- Detentions are stored in the existing per-school MIS JSON workspace. The database wrapper preserves them for roles without detention permission.
+
+HOUSE / BEHAVIOUR POINTS
+The existing editable reason/value policies are retained. Existing point records are not rewritten. Values continue to be validated in the existing 1–50 range.
+
+ON-CALL / SAFEGUARDING / EMERGENCY
+- On-Call includes lesson removals using the existing removal workflow.
+- Safeguarding requests use a separate database table with direct table access revoked.
+- On-Call-authorised staff can raise a safeguarding request, but confidential detail is returned only to safeguarding-authorised roles.
+- Existing Emergency centre alerts remain available from On-Call.
+- This software does not replace the school’s safeguarding, emergency-service or statutory reporting procedures.
+
+LOCKDOWN
+- Only the system administrator role can activate or end LockDown.
+- While active, student RPC access is rejected by the database.
+- Authenticated non-admin staff are blocked from normal OneEducation database calls and are restricted to the LockDown status/chat area.
+- LockDown is shown only while active for normal staff. Administrators can view/manage it when inactive.
+- Staff chat is held in the database and is available only to authenticated members of that school while LockDown is active.
+- The website also checks LockDown state while open, but the database restrictions are the authoritative control.
+
+PUPIL MOVES
+The existing individual allocation control is relabelled “Authorised pupil moves” and supports adding/removing the selected pupil from existing class/tutor memberships. Saves continue through capacity/timetable validation rather than bypassing it.
+
+REGISTERS
+Before downloading a register, staff choose either:
+- Existing attendance marks (tick/cross and coded statuses), or
+- Empty square boxes for hand marking.
+The current on-screen attendance workflow is unchanged.
+
+STAFF ROLES
+System administrators can edit an existing member’s school role. Added role choices include:
+- Head of Year
+- Deputy Head of Year
+- HUB staff
+- Designated Safeguarding Lead
+- Attendance officer
+Existing Headteacher, Deputy Headteacher, Assistant Headteacher, timetable manager, teacher, cover teacher, office and administrator roles remain.
+The role editor shows a short permission description. Role enforcement is performed in Supabase functions as well as the UI.
+
+STUDENT PORTAL BY YEAR
+School leadership can choose Home, Timetable, Classes, Exams and Notices visibility separately for Years 7–11. These are year-group settings, not individual-pupil exceptions. The database injects the relevant year permission set into the student portal response and redacts disabled data. LockDown overrides all student portal access.
+
+FUNDING
+- Available only to Headteacher, Deputy Headteacher and Assistant Headteacher roles.
+- Supports PDF, PNG, XLS and XLSX uploads, currently capped at 5 MB per file.
+- Files are stored privately in Supabase and direct table access is revoked.
+- Listing, upload, download and delete all re-check the leadership role on the database side. Hiding the page is not the security boundary.
+- The system administrator role is deliberately NOT granted Funding access because the requested access list named only the three leadership roles.
+Pilot note: this build stores small files in a private database table. For a high-volume production deployment, a private Supabase Storage bucket with equivalent server-side access controls is preferable for scale.
+
+AUTOMATION / DATA DEFAULTS
+New missing settings are merged in; existing values win. The migration does not reset an existing school’s house list, campus, pupils, classes, SATs results or timetable. The following automation defaults are false when missing:
+- massImport
+- autoClasses
+- autoTutors
+- autoHouses
+- autoClassCreation
+- autoTimetables
+
+ACCEPTANCE CHECKS BEFORE LIVE USE
+A. Administrator
+- Open main MIS and select School management.
+- Confirm all existing school records are present before making edits.
+- Confirm existing houses, campus layout and SATs data remain present.
+- Edit a test staff member role, sign in as that member and verify the expected tabs/actions.
+
+B. Timetable clash checks
+- Try to put the same room in two Week A classes at the same day/lesson: save must fail.
+- Try to put one teacher in two Week A classes at the same day/lesson: save must fail.
+- Put one pupil in two simultaneous classes: save must fail.
+- Put otherwise identical lessons in different weeks (A versus B): that alone must NOT be treated as a clash.
+- Leave auto timetable generation off and confirm generation refuses to run; then enable it only for a test school if required.
+
+C. LockDown
+- Activate LockDown as administrator.
+- In a separate student session, confirm normal student access is rejected.
+- In a separate non-admin staff session, confirm the normal MIS is unavailable and only LockDown/status/chat is usable.
+- Post a staff chat message and confirm another authorised staff session can see it.
+- End LockDown as administrator and confirm normal access returns.
+
+D. Safeguarding
+- Raise a test request as an On-Call-authorised role.
+- Verify a teacher/attendance role without safeguarding permission cannot retrieve confidential details.
+- Verify HUB / safeguarding-authorised staff can retrieve the detail and close the test request.
+
+E. Funding
+- Sign in as Headteacher/Deputy/Assistant and upload/download a small test PDF or PNG.
+- Verify a teacher, administrator and other non-listed roles cannot list or download the Funding file by calling the RPC directly, not merely by checking whether the page is visible.
+- Delete the test file.
+
+F. Registers / detentions
+- Download one register with existing marks and one with empty squares.
+- Create/edit a test detention, mark attendance and download that date’s detention CSV board.
+
+TEST STATUS OF THIS PACKAGE
+Completed locally without changing any live Supabase project:
+- JavaScript module syntax checks across every .mjs file.
+- Timetable smoke tests for Week A/B separation, room clash, teacher clash, overlapping-pupil clash, opt-in automation default and a small valid A/B generation case.
+- File/hash checks confirming demo-state.json, config.js and the main existing CSS/type styles remain unchanged.
+- ZIP structure check: root-level entries only; no directories.
+
+NOT EXECUTED AGAINST YOUR LIVE BACKEND
+- The SQL migration has NOT been run against your Supabase project from this build environment.
+- Live Auth/RPC/RLS behaviour, schema-version differences, browser cache/CDN behaviour and real file-upload limits therefore still need staging/live acceptance testing.
+- Because those backend tests are not available here, this release should be treated as a tested development/pilot build, not declared production-ready yet.
+
+ROLLBACK / RECOVERY
+Keep the pre-upgrade website ZIP and database backup. If the SQL migration fails, preserve the error output and restore/test from the database backup rather than editing live school records manually. If only the website deploy is faulty, restore the previous static site files while leaving the database untouched until the issue is diagnosed.

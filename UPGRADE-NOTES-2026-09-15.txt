@@ -1,0 +1,9 @@
+ONEEDUCATION 15 SEPTEMBER 2026 — QUICK NOTES
+
+- “iGradePlus” has been treated as the existing OneEducation “Your school. Your way.” management interface only. No third-party iGradePlus connection is present.
+- The main MIS now links directly to School management.
+- Added/completed: detention board, On-Call + restricted safeguarding, LockDown + staff chat, editable member roles, year-based student portal visibility, private Funding, register download choice and clearer authorised pupil moves.
+- Existing Week A/B timetable editing/generation and clash logic is retained and reinforced by the database migration.
+- Existing configurable houses, SATs imports, campus layouts, school records, Supabase browser config and automation-off defaults are preserved.
+- Run the separately supplied OneEducation-Upgrade-2026-09-15.sql before using the new database-backed features.
+- See START-HERE.txt for installation, permissions, acceptance tests and limitations.
