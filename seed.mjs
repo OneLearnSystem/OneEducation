@@ -1,1 +1,0 @@
-const sample=await fetch('demo-state.json').then(r=>r.json());export function initialState(){return structuredClone(new URLSearchParams(location.search).get('demo')==='1'?sample.mis:sample.blank)}
