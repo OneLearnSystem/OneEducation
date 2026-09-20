@@ -126,3 +126,6 @@ if(document.modelContext?.registerTool){
 
 
 function hideRestrictedControls(){if(demo)return;const map={openImport:'pupils',exportStudents:'pupils',copyCredentials:'pupils',classBuilder:'structure',newTutor:'structure',newRoom:'structure',manageAccess:'accounts',changeStatus:'policies',addClosure:'policies',newExamCycle:'timetable',importExamCsv:'timetable',profileBehaviour:'points',profileGroups:'classmove',postAnnouncement:'teaching'};for(const [id,cap] of Object.entries(map))if(!capabilities[cap])byId(id)?.remove();qsa('[data-route]').forEach(el=>{if(!canRoute(el.dataset.route))el.remove()})}
+
+const easyParams=new URLSearchParams(location.search);let easyContext;try{easyContext=JSON.parse(sessionStorage.getItem('oneeasy-context')||'null')}catch{}const easyReady=easyParams.get('oneeasy')==='1'&&easyContext?.school===easyParams.get('school')&&Date.now()-easyContext.created<3600000;
+if(easyReady&&easyContext.mode==='staff'&&api.identity()){reloadWorkspace().then(()=>syncLockdown()).catch(e=>{renderLogin();byId('loginStatus').textContent=e.message})}
