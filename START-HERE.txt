@@ -1,0 +1,65 @@
+ONE EDUCATE — GREEN & AMBER INTERFACE UPDATE
+
+INSTALLATION (EXISTING ONEEDUCATION WEBSITE)
+1. Keep a backup of your current website files.
+2. Extract this ZIP. Upload ALL files to the root of your existing OneEducation
+   GitHub repository. Replace matching files and include the new files.
+3. Keep your own config.js if you have customised app links. The supplied config
+   retains your nndjwqjyfgozltdoujiu Supabase project and publishable key.
+4. Wait for GitHub Pages to finish deployment. Refresh with Ctrl+F5, then sign in.
+5. Continue using the same website address, ?school=... value and login details.
+
+The ZIP contains files only, no folders. No repository rename is required.
+The brand is ONE EDUCATE. The internal product value must remain OneEducation
+in config.js because your database and OneEasy connections use that identifier.
+
+SQL
+No new SQL is required for this interface update on your working integrated
+installation. Do not reset your database or delete any school records.
+The three original upgrade SQL files are included for compatibility/reference;
+they are not new migrations. Existing installations do not need to rerun them
+for the branding update. Very old installations still require the earlier
+database upgrades for features such as On-Call, detentions and lockdown.
+
+DESIGN AND ROLES
+- Your supplied logo, green navigation, warm white surfaces and amber actions.
+- A local SVG icon set; no external font or icon service.
+- Administrators and school leadership: school overview, year attendance,
+  register follow-up, daily teaching, notices and permitted management tools.
+- Teachers and cover teachers: teaching workspace, lessons, registers and actions.
+- HUB, Head of Year and Deputy Head of Year: support dashboard with alerts from
+  the server-filtered On-Call feed, removals and current support arrangements.
+- Office, timetable and other staff: role-specific titles, shortcuts and tools.
+- Student/family portal: matching branding, own lessons, homework and permitted
+  sections. Existing year visibility controls still apply.
+- Registers, student records, classes, imports, SATs, timetables, exams, houses,
+  points, detentions, cover, documents, funding, role settings and lockdown remain.
+
+PERMISSIONS
+Administration remains visible to authorised roles in the header and sidebar.
+The previous server-permission compatibility fix is retained. This update does
+not grant any role, change school permissions or replace server security checks.
+Safeguarding message bodies are not displayed on the dashboard; authorised staff
+open them through the existing On-Call workflow. Private funding remains under
+its existing role restrictions. OneEasy session handling is retained.
+
+DASHBOARD DETAILS
+Match a staff member's login email to their teacher record for personal lessons.
+Attendance is present + late divided by recorded marks today, for the selected
+students. It is a workspace summary, not a statutory attendance return.
+Registers pending includes scheduled lessons later today; it does not label them
+overdue. Cover today counts saved cover arrangements, not uncovered lessons.
+Support arrangements include current recurring and future dated arrangements.
+On-Call summaries load when the dashboard opens; use On-Call for the existing
+resolve workflow. No new assignment or approval backend is implied by the design.
+
+LOCAL VERIFICATION
+Checked against a temporary local database: import, staff/rooms, class allocation,
+SATs, A/B timetable generation and clash checks, detentions and reasons, board
+downloads, both register formats, On-Call, student time out, year visibility,
+student detentions, role restrictions and lockdown/chat.
+Dashboard fixtures additionally check teacher matching, year filters, HUB alert
+privacy, student homework, visible administrator controls and mobile navigation.
+Screenshots use fictional local test data. No live school records were changed.
+
+Nothing has been deployed to GitHub or changed in your live Supabase project.

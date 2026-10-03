@@ -1,0 +1,41 @@
+ONEEDUCATION — INTEGRATED SCHOOL UPDATE
+
+INSTALL
+Back up the current OneLearn platform Supabase database before installing.
+If your earlier revamp and detentions SQL upgrades are installed, run ONLY ONEEDUCATION-INTEGRATED-UPGRADE.sql in project nndjwqjyfgozltdoujiu.
+If not installed, run these in order: ONEEDUCATION-REVAMP-UPGRADE.sql, ONEEDUCATION-DETENTIONS-UPGRADE.sql, then ONEEDUCATION-INTEGRATED-UPGRADE.sql. Do not rerun older installers after the integrated upgrade.
+Upload the HTML/CSS/JS/MJS/JSON/SVG website files to your OneEducation repository. Keep SQL and text guides off the public website. Preserve any customised app URLs in config.js. Hard-refresh browsers after upload.
+The ZIP has files only at its root. No folders. No live database or deployment was changed during development.
+
+WHAT CHANGED
+- School tools are inside the OneEducation sidebar. Old manage.html links redirect into it. Typography uses Segoe UI with rounded existing cards retained.
+- Pupil records supports Current, Graduated, Left School and Archived. Graduation rejects pupils outside Year 11. Non-current pupils leave active lists and their portal codes stop working; history remains. Restore current status when appropriate. A review/confirmation precedes changes.
+- Class allocation starts with teacher and year, then allows selection across tutor groups, select-visible, individual selection and add/remove/move actions. Assign a teacher with email before allocating a class. Existing year, capacity and timetable checks run in the database. A move requires every selected pupil to belong to the source class. Changes are atomic and revision-checked.
+- Week A/B are saved lessons. Pupils can select dates or the next week. Detentions appear on the relevant date and in the portal, including location/time/status; cancelling a detention hides it from the pupil's view.
+- Scheduled time out supports pupils AND teachers: one date or recurring lessons on a weekday, Week A/B/both, optional end date or until cancelled. Pupil timetables show scheduled time out. Teacher absence overlays appear in the timetable and pupils can see that cover should be checked. Existing scheduled lessons remain, so cover can be arranged. New lesson placement/generation and cover assignments reject unavailable staff. Generation conservatively reserves affected weekly slots even for future one-off absences; it does not optimise a separate timetable for each calendar date. Exam scheduling remains a separate workflow.
+- On-Call combines the existing lesson-removal workflow with targeted alerts. Targets: all staff, staff email, relevant class/year teaching staff, department or role. School leadership/HUB roles can oversee alerts. Safeguarding messages are limited to safeguarding-authorised roles and the sender. Year/class audiences are staff audiences, not student broadcasts. Staff email/department must match their staff profile. Existing legacy alerts remain available in the legacy centre (index.html?school=YOUR-SLUG#manage-alerts).
+- Staff roles can be edited immediately without redeeming a new invitation. At least one school administrator must remain. New accounts still need an invitation. HUB Staff, Head of Year, Deputy Head of Year and Staff roles are available alongside existing roles. Head of Year titles currently grant school-wide pupil-management permissions, not a restricted assigned-year scope.
+- Portal visibility is by year group or school default. Legacy individual restrictions are converted conservatively: if any individual hid a section, it is initially hidden for their whole year. Review year settings after upgrading. Original override values are retained as migration history. Hidden timetable permissions also hide detention data.
+- Funding files accept XLSX/XLS/CSV, PDF and PNG up to 2 MB. Only Headteacher, Deputy Headteacher and Assistant Headteacher roles can list/download/upload them. A plain system-administrator role does not automatically receive funding access. Archived files remain retained privately. Downloads are permission-checked, not public links.
+- LockDown is activated/ended by school leadership or an administrator. The staff chat exists only during an active session; old-session messages do not reappear. Ordinary staff backend operations are blocked, and student portal/actions are blocked. Leadership can end the session. Staff and student browsers refresh checks every 10 seconds while active/visible. Closed/offline/hidden browsers cannot receive immediate updates, and previously displayed information cannot be remotely erased. This is an in-app coordination feature, not an SMS/push or emergency-services system. Use the school's established emergency procedures.
+
+PERMISSIONS
+System administrator: school/account configuration and all operational tools except funding files.
+Headteacher / deputy / assistant headteacher: school leadership operations, lockdown and funding; no account-role administration.
+HUB / Head of Year / Deputy Head of Year: pupils, class moves, attendance, points, availability, teaching and safeguarding/alert oversight; no policy/account administration or funding.
+Timetable manager: teachers, rooms, class structure, timetables and availability; no pupil editing or funding.
+Teacher: attendance, points/detentions, class moves, teaching and relevant alerts.
+Office: pupils, class moves, availability, attendance and alerts.
+Cover teacher / Staff: attendance, detention-board viewing and relevant alerts.
+Ordinary staff cannot see admin sidebar entries and backend checks reject direct attempts. Existing open tabs pick up changed roles on reload; backend permissions apply immediately.
+
+KEEPING DATA CURRENT
+New operations and detention screens save immediately. Legacy main-MIS forms use the bottom Save changes button. Save existing changes before opening management/operations tools. On a revision conflict, refresh and repeat the change. Do not overwrite a conflicting workspace with stale data.
+Availability rows are cancellations rather than destructive deletions. Graduation and leaving retain names, classes and historical results. Apply your school's retention policy separately.
+
+VERIFICATION
+Local database tests cover repeatable upgrades, retained data, school isolation, role enforcement, graduation, class moves, availability, restricted funding, targeted alerts, year visibility, pupil detentions, unavailable teachers and lockdown/chat checks.
+Browser tests cover integrated navigation, teacher admin invisibility, imports/class allocation, Week A/B, detentions/downloads, pupil scheduled time out, year settings, On-Call, lockdown chat and mobile layout. Test fixtures are fictional. This is a locally tested release, not a live-school deployment or a security certification.
+
+NEXT PRODUCT
+OneNursery is a separate upcoming service, pale yellow, with Children and Attendance only in the requested initial scope. No behaviour points, house points, removals or On-Call are included in that scope. This OneEducation ZIP does not build or deploy OneNursery.
