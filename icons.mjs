@@ -1,5 +1,5 @@
 // Small, local SVG icon set. No font downloads or external icon service.
-const paths={
+const paths={bus:'',
  home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
  people:'<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3zM16 4a3 3 0 0 1 0 6m2 4a5 5 0 0 1 3 5v2"/>',
  register:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M9 11l2 2 4-4M9 17h6"/>',
@@ -30,5 +30,5 @@ const paths={
  wallet:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 8V4l14-2v3m4 7h-6v5h6m-3-3h.1"/>',
  check:'<path d="m4 12 5 5L20 6"/>'
 };
-const aliases={students:'people','pupil-records':'people',tutors:'people','manage-staff':'people','staff-accounts':'shield','manage-pupils':'plus','manage-sats':'chart','class-allocation':'move',classes:'book','manage-classes':'book','manage-timetable':'calendar',attendance:'register',homework:'book',revision:'book',exams:'file',cover:'refresh',availability:'clock',behaviour:'trophy',detentions:'alert',oncall:'bell',reports:'chart',evenings:'calendar',activities:'star',campus:'building','manage-rooms':'building','manage-houses':'trophy',school:'building',admin:'shield','manage-policies':'settings',funding:'wallet','lockdown-control':'lock',staffhub:'folder',helpdesk:'help',timetable:'calendar',notices:'bell'};
-export function icon(name,cls=''){return `<svg class="oe-icon ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${paths[aliases[name]||name]||paths.folder}</svg>`}
+const aliases={students:'people','pupil-records':'people',tutors:'people','manage-staff':'people','staff-accounts':'shield','manage-pupils':'plus','manage-sats':'chart','class-allocation':'move',classes:'book','manage-classes':'book','manage-timetable':'calendar',attendance:'register',homework:'book',revision:'book',exams:'file',cover:'refresh',availability:'clock',behaviour:'trophy',detentions:'alert',oncall:'bell',reports:'chart',evenings:'calendar',activities:'star',campus:'building','manage-rooms':'building','manage-houses':'trophy',school:'building',admin:'shield','manage-policies':'settings',funding:'wallet','lockdown-control':'lock',staffhub:'folder',helpdesk:'help','school-life':'calendar','staff-duties':'clock',isolation:'shield','late-bus':'bus',timetable:'calendar',notices:'bell'};
+export function icon(name,cls=''){const key=aliases[name]||name;return `<img class="oe-icon ${cls}" src="icon-${Object.hasOwn(paths,key)?key:'folder'}.svg" width="20" height="20" alt="" aria-hidden="true">`}
