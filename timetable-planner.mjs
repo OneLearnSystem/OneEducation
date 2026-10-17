@@ -1,6 +1,6 @@
-import {patternBlocked} from './schedule-tools.mjs?v=27.1';
-import {PERIODS,weekForDate,teacherBusy,uid,weekday,meetingInWeek} from './core.mjs?v=27.1';
-import {absence} from './schedule-tools.mjs?v=27.1';
+import {patternBlocked} from './schedule-tools.mjs?v=27.2';
+import {PERIODS,weekForDate,teacherBusy,uid,weekday,meetingInWeek} from './core.mjs?v=27.2';
+import {absence} from './schedule-tools.mjs?v=27.2';
 const weeks=['A','B'],label=(w,n)=>'Week '+w+' '+['Monday','Tuesday','Wednesday','Thursday','Friday'][Math.floor(n/5)]+' lesson '+(n%5+1);
 const active=s=>(s.students||[]).filter(p=>!p.archived);
 export function expanded(c){return (c.meetings||[]).flatMap(m=>m.week?[{...m}]:weeks.map(week=>({...m,week})))}

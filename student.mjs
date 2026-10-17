@@ -1,5 +1,5 @@
-import {meetingInWeek} from './core.mjs?v=27.1';
-import {portal} from './api.mjs?v=27.1';import {PERIODS,DAYS,weekday,nice,mins,timeAfter} from './core.mjs?v=27.1';
+import {meetingInWeek} from './core.mjs?v=27.2';
+import {portal} from './api.mjs?v=27.2';import {PERIODS,DAYS,weekday,nice,mins,timeAfter} from './core.mjs?v=27.2';
 const app=document.getElementById('app'),toast=document.getElementById('toast');const esc=(v='')=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));let data=null,view='home';
 const dateISO=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/London',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 function alert(msg){toast.textContent=msg;toast.className='show bad';setTimeout(()=>toast.className='',3500)}

@@ -1,5 +1,5 @@
-import * as C from './core.mjs?v=27.1';
-import {icon} from './icons.mjs?v=27.1';
+import * as C from './core.mjs?v=27.2';
+import {icon} from './icons.mjs?v=27.2';
 const e=(v='')=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const brand='<img class="educate-mark" src="oneeducate-mark.svg" alt="" width="46" height="42"><span class="brand-words"><strong>ONE EDUCATE</strong><small>New Education Through Hope</small></span>';
 const roleNames={admin:'Administrator',headteacher:'Headteacher',deputy_head:'Deputy headteacher',assistant_head:'Assistant headteacher',hub:'HUB staff',head_of_year:'Head of Year',deputy_head_of_year:'Deputy Head of Year',office:'School office',timetable_manager:'Timetable manager',teacher:'Teacher',cover_teacher:'Cover teacher',staff:'Staff'};

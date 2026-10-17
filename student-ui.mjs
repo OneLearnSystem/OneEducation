@@ -1,8 +1,8 @@
-import {esc,link} from './shared.mjs?v=27.1';
-import {icon} from './icons.mjs?v=27.1';
-import {brand} from './redesign.mjs?v=27.1';
-import {today,nice,weekForDate} from './core.mjs?v=27.1';
-import {legend} from './calendar.mjs?v=27.1';
+import {esc,link} from './shared.mjs?v=27.2';
+import {icon} from './icons.mjs?v=27.2';
+import {brand} from './redesign.mjs?v=27.2';
+import {today,nice,weekForDate} from './core.mjs?v=27.2';
+import {legend} from './calendar.mjs?v=27.2';
 export function studentShell({data,view,sections,allowed,content,closed}){
  const p=data.student,nav={timetable:'My timetable',homework:'Homework',exams:'Exams',bus:'Late bus',notices:'Announcements',...Object.fromEntries(Object.entries(sections).filter(([k])=>!['timetable','homework','exams','notices'].includes(k)))};
  return '<div class="student-redesign"><header class="suite-header"><button id="studentMenu" class="student-mobile-menu" aria-label="Toggle navigation" aria-expanded="false">'+icon('menu')+'</button><a class="suite-brand" href="#" data-view="home">'+brand+'</a><span class="portal-label">Student portal</span><div class="suite-name">'+esc(data.school.name)+'</div><button id="portalRefresh" title="Refresh">'+icon('refresh')+'<span class="sr-only">Refresh</span></button><button id="portalOut">Sign out</button></header><aside class="student-rail"><div class="student-id"><span class="profile-initials">'+esc((p.first[0]+p.last[0]).toUpperCase())+'</span><h2>'+esc(p.first+' '+p.last)+'</h2><p>Year '+esc(p.year)+' · '+esc(data.tutors[0]?.name||'Your school')+'</p></div><nav aria-label="Student portal"><button data-view="home" class="'+(view==='home'?'active':'')+'">'+icon('home')+'<span>My day</span></button>'+Object.entries(nav).filter(([k])=>allowed(k)).map(([k,t])=>'<button data-view="'+k+'" class="'+(view===k?'active':'')+'">'+icon(k==='bus'?'bus':k)+'<span>'+esc(k==='helpdesk'?'Get support':t)+'</span></button>').join('')+'</nav><a class="onehome-link" href="'+esc(link('OneHome'))+'"><img src="onehome-mark.svg" width="22" height="22" alt="">Open OneHome</a><p class="rail-help">Your space for the school day.<br>Need a hand? Speak to your tutor.</p></aside><main id="main" class="student-main">'+(closed?'<div class="closure-banner">School is closed or closing. Follow your school’s latest instructions.</div>':'')+content+'</main><footer class="student-footer">ONE EDUCATE · Your school day, connected</footer></div>';

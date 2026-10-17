@@ -1,6 +1,6 @@
-import {generateDraft} from './timetable-planner.mjs?v=27.1';
-import {patternBlocked} from './schedule-tools.mjs?v=27.1';
-import {uid,makeCode,candidate,csvParse,parseNames,today} from './core.mjs?v=27.1';
+import {generateDraft} from './timetable-planner.mjs?v=27.2';
+import {patternBlocked} from './schedule-tools.mjs?v=27.2';
+import {uid,makeCode,candidate,csvParse,parseNames,today} from './core.mjs?v=27.2';
 export const defaults={massImport:false,autoClasses:false,autoTutors:false,autoHouses:false,autoTimetables:false};
 export const settings=s=>({...defaults,...s.school.options});
 export const count=(s,id)=>s.students.filter(p=>!p.archived&&(p.classIds||[]).includes(id)).length;
