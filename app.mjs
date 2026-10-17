@@ -1,14 +1,14 @@
-import {mountLife,adminLinks} from './school-life.mjs';
-import {mountPastoral} from './workspace-live.mjs';
-import {staffShell,staffDashboard,brand} from './redesign.mjs';
+import {mountLife,adminLinks} from './school-life.mjs?v=27.1';
+import {mountPastoral} from './workspace-live.mjs?v=27.1';
+import {staffShell,staffDashboard,brand} from './redesign.mjs?v=27.1';
 let dashboardYear='';
-import {mountManage} from './manage.mjs';
-import {mountOperations,syncLockdown} from './operations.mjs';
-import {mountDetentions,registerSheet} from './quick-tools.mjs';
-import {Hub} from './hub-staff.mjs';
-import * as api from './api.mjs';
-import {initialState} from './seed.mjs';
-import * as C from './core.mjs';
+import {mountManage} from './manage.mjs?v=27.1';
+import {mountOperations,syncLockdown} from './operations.mjs?v=27.1';
+import {mountDetentions,registerSheet} from './quick-tools.mjs?v=27.1';
+import {Hub} from './hub-staff.mjs?v=27.1';
+import * as api from './api.mjs?v=27.1';
+import {initialState} from './seed.mjs?v=27.1';
+import * as C from './core.mjs?v=27.1';
 
 const app=document.getElementById('app'),modal=document.getElementById('modal'),toastEl=document.getElementById('toast');
 let capabilities={},state=null,revision=0,role='',demo=false,route='home',selectedStudent='',dirty=false,saving=false,registerDate=C.today();

@@ -1,5 +1,5 @@
-import {appRPC,login,signOut,identity,demo,cfg,central,slug} from './shared.mjs';
-import {workspacePermissions} from './permissions.mjs';
+import {appRPC,login,signOut,identity,demo,cfg,central,slug} from './shared.mjs?v=27.1';
+import {workspacePermissions} from './permissions.mjs?v=27.1';
 export {signOut,identity};export const logout=signOut;
 export async function rpc(name,args){const result=await appRPC(name,args);return !demo&&['oe_get_state','oe_save_state'].includes(name)?workspacePermissions(result,{central,slug}):result}
 export async function signIn(email,password){if(!demo)await login(email,password);return rpc(cfg.product==='OneEducation'?'oe_get_state':cfg.product==='OneHome'?'oh_staff':'ss_staff')}

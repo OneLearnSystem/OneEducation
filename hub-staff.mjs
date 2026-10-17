@@ -1,5 +1,5 @@
-import * as api from './api.mjs';
-import {SECTIONS,escapeHTML as esc,today,uid,safeURL,readFile,downloadFile,downloadCSV,modal,closeModal,options,printReports} from './hub-shared.mjs';
+import * as api from './api.mjs?v=27.1';
+import {SECTIONS,escapeHTML as esc,today,uid,safeURL,readFile,downloadFile,downloadCSV,modal,closeModal,options,printReports} from './hub-shared.mjs?v=27.1';
 const ROUTES={staffhub:'staff',homework:'homework',reports:'report',evenings:'evening',helpdesk:'ticket',activities:'activity',revision:'revision'};
 const TITLES={staff:'Staff hub',homework:'Homework',report:'Student reports',evening:'Parents’ evening',ticket:'School office helpdesk',activity:'Clubs & trips',revision:'Revision hub'};
 let ctx,store=null,loadedDemo=null,current='',generation=0;

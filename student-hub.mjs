@@ -1,15 +1,16 @@
-import {brand} from './redesign.mjs';
-import {studentShell,studentDashboard,busesPage} from './student-ui.mjs';
-import {busCall} from './school-life.mjs';
-import {weekCalendar,eventRows,overlayLessons,monday,plusDay,bindCalendar,legend} from './calendar.mjs';
+import {studentDay} from './calendar.mjs?v=27.1';
+import {brand} from './redesign.mjs?v=27.1';
+import {studentShell,studentDashboard,busesPage} from './student-ui.mjs?v=27.1';
+import {busCall} from './school-life.mjs?v=27.1';
+import {weekCalendar,eventRows,overlayLessons,monday,plusDay,bindCalendar,legend} from './calendar.mjs?v=27.1';
 let buses={buses:[],enabled:false};
 
-import {absence,extras} from './schedule-tools.mjs';
-import {weekForDate} from './core.mjs';
-import {meetingInWeek} from './core.mjs';
-import {portal,studentAction} from './api.mjs';
-import {PERIODS,DAYS,weekday,mins,timeAfter} from './core.mjs';
-import {SECTIONS,escapeHTML as esc,today,safeURL,readFile,downloadFile,modal,closeModal,options,printReports} from './hub-shared.mjs';
+import {absence,extras} from './schedule-tools.mjs?v=27.1';
+import {weekForDate} from './core.mjs?v=27.1';
+import {meetingInWeek} from './core.mjs?v=27.1';
+import {portal,studentAction} from './api.mjs?v=27.1';
+import {PERIODS,DAYS,weekday,mins,timeAfter} from './core.mjs?v=27.1';
+import {SECTIONS,escapeHTML as esc,today,safeURL,readFile,downloadFile,modal,closeModal,options,printReports} from './hub-shared.mjs?v=27.1';
 const app=document.getElementById('app'),by=id=>document.getElementById(id);
 let selectedMonday='',data=null,view='home',code=sessionStorage.getItem('oe-student-code')||'',loading=false,generation=0;
 sessionStorage.removeItem('oe-student');
@@ -19,14 +20,14 @@ function signOut(){generation++;code='';data=null;sessionStorage.removeItem('oe-
 function login(error=''){app.innerHTML=`<main class="portal-login"><section><div class="suite-brand login-mark">${brand}</div><p class="eyebrow">STUDENT &amp; FAMILY PORTAL</p><h1>Your school day,<br>all in one place.</h1><p>Use your private student code for school information, homework and family bookings.</p></section><form id="codeForm"><h2>Open student portal</h2><label>Student login code<input id="code" autocomplete="off" spellcheck="false" required></label><button class="btn primary">Continue</button><a href="index.html">Staff sign in</a><p id="loginError" class="form-status bad" role="status">${esc(error)}</p></form></main>`;by('codeForm').onsubmit=async e=>{e.preventDefault();e.submitter.disabled=true;code=by('code').value.trim();try{await reload();sessionStorage.setItem('oe-student-code',code)}catch(err){code='';by('loginError').textContent=err.message;e.submitter.disabled=false}}}
 async function reload(silent=false){if(loading)return;loading=true;const token=++generation;try{const fresh=await portal(code);if(token!==generation)return;if(!fresh.permissions||!fresh.hub)throw Error('Your school needs to finish the portal upgrade. Please contact staff.');data=fresh;if(allowed('bus')){try{buses=await busCall('read',code)}catch(e){buses={buses:[],error:e.message}}}if(token!==generation)return;if(view!=='home'&&!allowed(view)){closeModal();view='home';}render()}catch(e){if(!silent)throw e;data=null;closeModal();login(/LOCKDOWN/.test(e.message)?e.message:'Please sign in again to refresh your access.')}finally{loading=false}}
 function baseLessons(date){if(!allowed('timetable'))return[];if(weekday(date)>4)return extras(data,data.student.id,date);const day=weekday(date);return PERIODS.map(p=>{if(p.id===0)return {...p,subject:data.tutors[0]?.name||'Tutor time',room:'Tutor base'};if(typeof p.id!=='number')return {...p,subject:p.name};const c=data.classes.find(c=>(c.meetings||[]).some(m=>m.day===day&&m.period===p.id&&meetingInWeek(m,data,date))),m=c?.meetings.find(m=>m.day===day&&m.period===p.id&&meetingInWeek(m,data,date)),exam=data.exams.find(e=>e.date===date&&mins(e.start)<mins(p.end)&&mins(timeAfter(e.start,e.duration))>mins(p.start)),cover=data.covers.find(v=>v.date===date&&v.classId===c?.id&&Number(v.period)===p.id),removed=data.removals.some(r=>r.date===date&&r.periods.includes(p.id));return {...p,subject:exam?exam.paper:c?.subject||'Independent study',className:c?.name,room:data.rooms.find(r=>r.id===(exam?.roomId||m?.roomId))?.name,teacher:data.teachers.find(t=>t.id===(cover?.teacherId||c?.teacherId))?.name,exam:!!exam,removed:removed||absence(data,'student',data.student.id,date,p.id),teacherOut:absence(data,'teacher',cover?.teacherId||c?.teacherId,date,p.id)}}).concat(extras(data,data.student.id,date)).sort((a,b)=>a.start.localeCompare(b.start))}
-function lessons(date){if(!allowed('timetable'))return [];const extras=eventRows(data.schoolLife||[],date,data).concat((buses.buses||[]).filter(b=>b.booked&&b.data.date===date).map(b=>({...b.data,kind:'bus',subject:'Late bus · '+b.data.name,room:b.data.location})));return overlayLessons(baseLessons(date),extras)}
+function lessons(date){if(!allowed('timetable'))return [];const booked=(buses.buses||[]).filter(b=>b.booked&&b.data.date===date).map(b=>({...b.data,kind:'bus',subject:'Late bus · '+b.data.name,room:b.data.location}));return studentDay(data,data.student,date,booked)}
 function calendarFor(date){const start=monday(date);return weekCalendar([0,1,2,3,4].map(i=>lessons(plusDay(start,i))),start,{compact:true})}
 function lesson(l){return `<div class="lesson ${l.removed?'removed':''}"><time>${l.start}</time><div><strong>${l.removed?'Scheduled to be out of lesson':esc(l.subject)}</strong><small>${esc(l.removed?'Follow staff instructions.':[l.className,l.room,l.teacher,l.teacherOut?'Teacher scheduled out · check cover':''].filter(Boolean).join(' · '))}</small></div>${l.exam?'<span class="tag">Exam</span>':''}</div>`}
 function weekDate(day){const d=new Date((selectedMonday||today())+'T12:00:00');d.setDate(d.getDate()-weekday(selectedMonday||today())+day);return d.toISOString().slice(0,10)}
 const heading=(title,copy='')=>`<div class="page-head"><div><p>ONE EDUCATE</p><h1>${esc(title)}</h1>${copy?`<span>${esc(copy)}</span>`:''}</div></div>`;
 function notices(){return data.announcements.slice().reverse().map(n=>`<article class="feed-item"><small>${esc(n.date)}</small><strong>${esc(n.title)}</strong><p>${esc(n.body)}</p></article>`).join('')||'<p>No notices yet.</p>'}
 
-function timetableGrid(){return heading('Your school week')+'<div class="student-week-tools"><button id="portal-prev-week" class="btn soft">Previous week</button><label>Choose week<input id="portal-week-date" type="date" value="'+(selectedMonday||today())+'"></label><strong>Week '+weekForDate(data,weekDate(0))+'</strong><button id="portal-next-week" class="btn soft">Next week</button><button id="portal-print" class="btn soft">Print</button></div>'+calendarFor(selectedMonday||today())+legend()}
+function timetableGrid(){return heading('Your school week','Lessons, exams and scheduled time out, with space to see the whole day.')+'<div class="student-week-tools"><button id="portal-prev-week" class="btn soft">Previous week</button><label>Choose week<input id="portal-week-date" type="date" value="'+(selectedMonday||today())+'"></label><strong>Week '+weekForDate(data,weekDate(0))+'</strong><button id="portal-next-week" class="btn soft">Next week</button><button id="portal-print" class="btn soft">Print</button></div>'+calendarFor(selectedMonday||today())+legend()}
 
 function basePage(){if(view==='bus')return heading('')+busesPage(buses);if(view==='home')return studentDashboard({data,allowed,lessons:lessons(today()),calendar:calendarFor(today()),buses,detentions:detentionList(today())});
 if(view==='timetable')return timetableGrid()+detentionList(weekDate(0),weekDate(6));
