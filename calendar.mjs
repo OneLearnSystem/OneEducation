@@ -1,6 +1,6 @@
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-import {DAYS,PERIODS,mins,weekForDate,meetingInWeek,weekday,timeAfter} from './core.mjs?v=27.2';
-import {occurs as availabilityOccurs,extras,absence} from './schedule-tools.mjs?v=27.2';
+import {DAYS,PERIODS,mins,weekForDate,meetingInWeek,weekday,timeAfter} from './core.mjs?v=27.3';
+import {occurs as availabilityOccurs,extras,absence} from './schedule-tools.mjs?v=27.3';
 export const plusDay=(date,n)=>{const d=new Date(date+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
 export const monday=date=>plusDay(date,-((new Date(date+'T12:00:00Z').getUTCDay()+6)%7));
 export const occurs=(d,date,state)=>!d.cancelled&&date>=d.date&&date<=(d.until||d.date)&&(d.repeat!=='weekly'?date===d.date:new Date(date+'T12:00:00Z').getUTCDay()===new Date(d.date+'T12:00:00Z').getUTCDay()&&(!d.week||d.week==='both'||d.week===weekForDate(state,date)));

@@ -1,4 +1,4 @@
-import {absence,extras} from './schedule-tools.mjs?v=27.2';
+import {absence,extras} from './schedule-tools.mjs?v=27.3';
 export const DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday'];
 export const PERIODS=[{id:0,name:'Tutor time',start:'08:25',end:'08:40'},{id:1,name:'Lesson 1',start:'08:40',end:'09:40'},{id:2,name:'Lesson 2',start:'09:40',end:'10:40'},{id:'break',name:'Break',start:'10:40',end:'11:00'},{id:3,name:'Lesson 3',start:'11:00',end:'12:10'},{id:4,name:'Lesson 4',start:'12:10',end:'13:20'},{id:'lunch',name:'Lunch',start:'13:20',end:'14:00'},{id:5,name:'Lesson 5',start:'14:00',end:'15:00'}];
 export const HOUSES=[{name:'Brunel',color:'#467fc5'},{name:'Nightingale',color:'#29a58c'},{name:'Secole',color:'#b880c6'},{name:'Turning',color:'#db9f3d'}];

@@ -1,5 +1,5 @@
-import {csvParse,uid,makeCode,candidate,today} from './core.mjs?v=27.2';
-import {checkTimetable,settings} from './manage-core.mjs?v=27.2';
+import {csvParse,uid,makeCode,candidate,today} from './core.mjs?v=27.3';
+import {checkTimetable,settings} from './manage-core.mjs?v=27.3';
 const norm=s=>String(s||'').trim().toLowerCase();
 export const fields={students:{id:'Student ID',first:'First name',last:'Last name',fullName:'Student name',year:'Year',tutor:'Tutor',classes:'Classes',parentEmail:'Parent email'},staff:{fullName:'Full name',title:'Title',surname:'Display surname',email:'Email',department:'Department',role:'Role'}};
 const aliases={id:['studentid'],first:['firstname','first'],last:['lastname','surname','last'],fullName:['studentname','fullname','teacherfullname','name'],year:['year','yeargroup'],tutor:['tutor','tutorgroup'],classes:['classes','class'],parentEmail:['parentemail','parentguardianemail'],title:['title','teachertitle'],surname:['displaysurname','teachersurname','surname'],email:['email','teacheremail','staffemail'],department:['department'],role:['role']};

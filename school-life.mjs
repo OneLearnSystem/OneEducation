@@ -1,9 +1,9 @@
-import {central,slug,esc,download} from './shared.mjs?v=27.2';
-import {rpc} from './api.mjs?v=27.2';
-import {today,csvWrite} from './core.mjs?v=27.2';
-import {icon} from './icons.mjs?v=27.2';
-import {fields,readCSV,mappedRows,previewStudents,previewStaff,moveStudents} from './bulk-tools.mjs?v=27.2';
-import {weekCalendar,eventRows,monday,plusDay,bindCalendar,legend} from './calendar.mjs?v=27.2';
+import {central,slug,esc,download} from './shared.mjs?v=27.3';
+import {rpc} from './api.mjs?v=27.3';
+import {today,csvWrite} from './core.mjs?v=27.3';
+import {icon} from './icons.mjs?v=27.3';
+import {fields,readCSV,mappedRows,previewStudents,previewStaff,moveStudents} from './bulk-tools.mjs?v=27.3';
+import {weekCalendar,eventRows,monday,plusDay,bindCalendar,legend} from './calendar.mjs?v=27.3';
 export const life=(action='read',data={},id=null,revision=0)=>central('oe26_staff',{p_slug:slug,p_action:action,p_data:data,p_id:id,p_revision:revision});
 export const busCall=(action='read',code=null,bus=null,student=null)=>central('oe26_bus',{p_slug:slug,p_action:action,p_code:code,p_bus:bus,p_student:student},code===null);
 const opt=(items,fn=x=>x.name)=>items.map(x=>'<option value="'+esc(x.id)+'">'+esc(fn(x))+'</option>').join('');
