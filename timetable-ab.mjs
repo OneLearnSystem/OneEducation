@@ -1,8 +1,8 @@
-import {staffCalendar,bindCalendar,monday,plusDay} from './calendar.mjs?v=27.3';
-import {today,weekForDate} from './core.mjs?v=27.3';
-import * as api from './api.mjs?v=27.3';
-import {initialState} from './seed.mjs?v=27.3';
-import {PERIODS,DAYS} from './core.mjs?v=27.3';
+import {staffCalendar,bindCalendar,monday,plusDay} from './calendar.mjs?v=29.0';
+import {today,weekForDate} from './core.mjs?v=29.0';
+import * as api from './api.mjs?v=29.0';
+import {initialState} from './seed.mjs?v=29.0';
+import {PERIODS,DAYS} from './core.mjs?v=29.0';
 const app=document.querySelector('#app'),status=document.querySelector('#status');
 const esc=(v='')=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let data=null,pupils=[],demo=false;

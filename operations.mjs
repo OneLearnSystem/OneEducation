@@ -1,6 +1,6 @@
-import {central,slug,identity,esc} from './shared.mjs?v=27.3';
-import {readFile,downloadFile,SECTIONS} from './hub-shared.mjs?v=27.3';
-import {today,weekForDate} from './core.mjs?v=27.3';
+import {central,slug,identity,esc} from './shared.mjs?v=29.0';
+import {readFile,downloadFile,SECTIONS} from './hub-shared.mjs?v=29.0';
+import {today,weekForDate} from './core.mjs?v=29.0';
 export const ROLES={admin:'System administrator',headteacher:'Headteacher',deputy_head:'Deputy headteacher',assistant_head:'Assistant headteacher',timetable_manager:'Timetable manager',hub:'HUB staff',head_of_year:'Head of Year',deputy_head_of_year:'Deputy Head of Year',teacher:'Teacher',cover_teacher:'Cover teacher',office:'School office',staff:'Staff'};
 export const ops=(action='read',data={},id=null,revision=0)=>central('ol_operations',{p_slug:slug,p_action:action,p_data:data,p_id:id,p_revision:revision});
 export function occurs(a,date,period,state){if(a.cancelled||date<a.start||a.end&&date>a.end||!a.periods?.map(Number).includes(Number(period)))return false;const day=(new Date(date+'T12:00:00Z').getUTCDay()+6)%7;return (a.recurring?Number(a.day)===day:date===a.start)&&(a.week==='both'||a.week===weekForDate(state,date))}

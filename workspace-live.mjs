@@ -1,5 +1,5 @@
-import {central,slug} from './shared.mjs?v=27.3';
-import {pastoralOverview,workspaceKind} from './redesign.mjs?v=27.3';
+import {central,slug} from './shared.mjs?v=29.0';
+import {pastoralOverview,workspaceKind} from './redesign.mjs?v=29.0';
 export async function mountPastoral({state,role,capabilities,demo}){
  const host=document.getElementById('pastoral-live');
  if(!host||workspaceKind(role,capabilities)!=='pastoral')return;

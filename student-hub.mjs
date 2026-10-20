@@ -1,16 +1,16 @@
-import {studentDay} from './calendar.mjs?v=27.3';
-import {brand} from './redesign.mjs?v=27.3';
-import {studentShell,studentDashboard,busesPage} from './student-ui.mjs?v=27.3';
-import {busCall} from './school-life.mjs?v=27.3';
-import {weekCalendar,eventRows,overlayLessons,monday,plusDay,bindCalendar,legend} from './calendar.mjs?v=27.3';
+import {studentDay} from './calendar.mjs?v=29.0';
+import {brand} from './redesign.mjs?v=29.0';
+import {studentShell,studentDashboard,busesPage} from './student-ui.mjs?v=29.0';
+import {busCall} from './school-life.mjs?v=29.0';
+import {weekCalendar,eventRows,overlayLessons,monday,plusDay,bindCalendar,legend} from './calendar.mjs?v=29.0';
 let buses={buses:[],enabled:false};
 
-import {absence,extras} from './schedule-tools.mjs?v=27.3';
-import {weekForDate} from './core.mjs?v=27.3';
-import {meetingInWeek} from './core.mjs?v=27.3';
-import {portal,studentAction} from './api.mjs?v=27.3';
-import {PERIODS,DAYS,weekday,mins,timeAfter} from './core.mjs?v=27.3';
-import {SECTIONS,escapeHTML as esc,today,safeURL,readFile,downloadFile,modal,closeModal,options,printReports} from './hub-shared.mjs?v=27.3';
+import {absence,extras} from './schedule-tools.mjs?v=29.0';
+import {weekForDate} from './core.mjs?v=29.0';
+import {meetingInWeek} from './core.mjs?v=29.0';
+import {portal,studentAction} from './api.mjs?v=29.0';
+import {PERIODS,DAYS,weekday,mins,timeAfter} from './core.mjs?v=29.0';
+import {SECTIONS,escapeHTML as esc,today,safeURL,readFile,downloadFile,modal,closeModal,options,printReports} from './hub-shared.mjs?v=29.0';
 const app=document.getElementById('app'),by=id=>document.getElementById(id);
 let selectedMonday='',data=null,view='home',code=sessionStorage.getItem('oe-student-code')||'',loading=false,generation=0;
 sessionStorage.removeItem('oe-student');
